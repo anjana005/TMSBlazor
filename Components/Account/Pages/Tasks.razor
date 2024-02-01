@@ -1,11 +1,14 @@
-﻿@page "/Tasks"
+﻿@page "/tasks"
 @using TMSBlazor.Data
 @using TMSBlazor.Services
 @inject TaskDataService taskDataService
 @attribute [StreamRendering]
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
+<AuthorizeView>
 <PageTitle>Tasks</PageTitle>
 <span class="flex justify-between p-2">
     <h1 class="text-3xl font-semibold text-purple-900">Tasks</h1>
@@ -125,3 +128,4 @@ else
         NavigationManager.NavigateTo("Tasks");
     }
 }
+</AuthorizeView>
