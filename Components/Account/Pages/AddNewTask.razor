@@ -1,0 +1,118 @@
+﻿@page "/AddNewTask"
+@page "/AddNewTask/{TaskId:int}"
+@using TMSBlazor.Data
+@using TMSBlazor.Services
+@inject TaskDataService TaskDataService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+@if (TaskId==0){
+     <h1 class="text-3xl font-semibold text-purple-900 p-2">Add New Task</h1>
+}
+else{
+     <h1 class="text-3xl font-semibold text-purple-900 p-2">Edit Task</h1>
+}
+<EditForm Model="CurrentTaskData" OnSubmit="HandleSubmit" class="p-8" FormName="AddEditForm">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="bg-purple-900 p-4 rounded shadow-md w-96">
+        <!-- Task Title -->
+        <div class="mb-4 form-group">
+            <label class="block text-sm font-medium text-white">Title</label>
+            <InputText class="form-control mt-1 p-2 w-full border rounded-md" @bind-Value="CurrentTaskData.Title" required></InputText>
+            <ValidationMessage For="() => CurrentTaskData.Title"></ValidationMessage>
+        </div>
+
+        <!-- Task Description -->
+        <div class="mb-4 form-group">
+            <label class="block text-sm font-medium text-white">Description</label>
+            <InputTextArea rows="3" class="form-control mt-1 p-2 w-full border rounded-md" @bind-Value="CurrentTaskData.Description" required></InputTextArea>
+            <ValidationMessage For="() => CurrentTaskData.Description"></ValidationMessage>
+        </div>
+
+        <!-- Task DueDate -->
+        <div class="mb-4 form-group">
+            <label class="block text-sm font-medium text-white">Due Date</label>
+                <InputDate class="form-control mt-1 p-2 w-full border rounded-md" @bind-Value="CurrentTaskData.DueDate" required></InputDate>
+            <ValidationMessage For="() => CurrentTaskData.DueDate"></ValidationMessage>
+        </div>
+
+        <!-- Task Status -->
+        <div class="mb-4 form-group">
+            <label class="block text-sm font-medium text-white">Status</label>
+                <InputSelect class="form-control mt-1 p-2 w-full border rounded-md" @bind-Value="CurrentTaskData.Status" required>
+                    <option default selected disabled>Select Status</option>
+                    <option value="To Do">To Do</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </InputSelect>
+            <ValidationMessage For="() => CurrentTaskData.Status"></ValidationMessage>
+        </div>
+
+        <div class="flex justify-end space-x-2">
+            @if (TaskId == 0)
+            {
+                <button type="submit" class="px-4 py-2 bg-white font-bold text-purple-900 rounded hover:bg-purple-600 focus:outline-none focus:ring focus:border-blue-300">Create</button>
+            }
+            else
+            {
+                <button type="submit" class="px-4 py-2 bg-white font-bold text-purple-900 rounded hover:bg-purple-600 focus:outline-none focus:ring focus:border-blue-300">Update</button>
+            }
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private bool isInitialized = false;
+
+    [Parameter]
+    public int TaskId { get; set; }
+
+    [SupplyParameterFromForm]
+    TaskData CurrentTaskData { get; set; } = new();
+
+    protected async Task HandleSubmit()
+    {
+        if (TaskId > 0)
+        {
+            await UpdateTaskData();
+        }
+        else {
+            await CreateNewTaskData();
+        }
+    }
+
+
+    protected async Task CreateNewTaskData()
+    {
+        await TaskDataService.AddNewTaskData(CurrentTaskData);
+        NavigationManager.NavigateTo("Tasks");
+    }
+
+    protected async Task UpdateTaskData()
+    {
+            var DBTask = await TaskDataService.GetTaskDataById(TaskId);
+            DBTask.Title = CurrentTaskData.Title;
+            DBTask.Description = CurrentTaskData.Description;
+            DBTask.DueDate = CurrentTaskData.DueDate;
+            DBTask.Status = CurrentTaskData.Status;
+            Console.WriteLine(DBTask.Title);
+            await TaskDataService.UpdateTaskDataDetail(DBTask);
+            NavigationManager.NavigateTo("Tasks");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!isInitialized && TaskId > 0)
+        {
+            var task= await TaskDataService.GetTaskDataById(TaskId);
+            if (task is not null) {
+                CurrentTaskData.Title  = task.Title;
+                CurrentTaskData.Description  = task.Description;
+                CurrentTaskData.DueDate = task.DueDate;
+                CurrentTaskData.Status = task.Status;
+            }
+            isInitialized = true;
+        }
+    } 
+ }
