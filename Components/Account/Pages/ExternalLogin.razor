@@ -19,7 +19,7 @@
 <PageTitle>Register</PageTitle>
 
 <StatusMessage Message="@message" />
-<h1>Register</h1>
+<h1 class="text-3xl font-semibold text-purple-900 p-2 text-center">Register</h1>
 <h2>Associate your @ProviderDisplayName account.</h2>
 <hr />
 
@@ -29,7 +29,7 @@
     logging in.
 </div>
 
-<div class="row">
+<div class="row flex justify-center">
     <div class="col-md-4">
         <EditForm Model="Input" OnValidSubmit="OnValidSubmitAsync" FormName="confirmation" method="post">
             <DataAnnotationsValidator />
@@ -39,7 +39,7 @@
                 <label for="email" class="form-label">Email</label>
                 <ValidationMessage For="() => Input.Email" />
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-1 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Register</button>
         </EditForm>
     </div>
 </div>

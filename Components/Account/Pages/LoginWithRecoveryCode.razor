@@ -11,14 +11,14 @@
 
 <PageTitle>Recovery code verification</PageTitle>
 
-<h1>Recovery code verification</h1>
+<h1 class="text-3xl font-semibold text-purple-900 p-2 text-center">Recovery code verification</h1>
 <hr />
 <StatusMessage Message="@message" />
 <p>
     You have requested to log in with a recovery code. This login will not be remembered until you provide
     an authenticator app code at log in or disable 2FA and log in again.
 </p>
-<div class="row">
+<div class="row flex justify-center">
     <div class="col-md-4">
         <EditForm Model="Input" FormName="login-with-recovery-code" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator />
@@ -28,7 +28,7 @@
                 <label for="recovery-code" class="form-label">Recovery Code</label>
                 <ValidationMessage For="() => Input.RecoveryCode" class="text-danger" />
             </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+            <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-1 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Log in</button>
         </EditForm>
     </div>
 </div>

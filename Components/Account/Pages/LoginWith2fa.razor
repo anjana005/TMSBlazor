@@ -11,11 +11,11 @@
 
 <PageTitle>Two-factor authentication</PageTitle>
 
-<h1>Two-factor authentication</h1>
+<h1 class="text-3xl font-semibold text-purple-900 p-2 text-center">Two-factor authentication</h1>
 <hr />
 <StatusMessage Message="@message" />
 <p>Your login is protected with an authenticator app. Enter your authenticator code below.</p>
-<div class="row">
+<div class="row flex justify-center">
     <div class="col-md-4">
         <EditForm Model="Input" FormName="login-with-2fa" OnValidSubmit="OnValidSubmitAsync" method="post">
             <input type="hidden" name="ReturnUrl" value="@ReturnUrl" />
@@ -34,7 +34,7 @@
                 </label>
             </div>
             <div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-1 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Log in</button>
             </div>
         </EditForm>
     </div>
