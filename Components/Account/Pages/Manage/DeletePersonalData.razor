@@ -14,7 +14,7 @@
 
 <StatusMessage Message="@message" />
 
-<h3>Delete Personal Data</h3>
+<h3 class="text-md font-semibold text-purple-900 p-2 text-center">Delete Personal Data</h3>
 
 <div class="alert alert-warning" role="alert">
     <p>
@@ -34,7 +34,9 @@
                 <ValidationMessage For="() => Input.Password" class="text-danger" />
             </div>
         }
-        <button class="w-100 btn btn-lg btn-danger" type="submit">Delete data and close my account</button>
+        <div class="text-center">
+            <button class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-3 py-1.5 mb-1 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" type="submit">Delete data and close my account</button>
+        </div>
     </EditForm>
 </div>
 
